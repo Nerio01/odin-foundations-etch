@@ -18,7 +18,7 @@ const makeRow = (rowLength) => {
   const row = document.createElement('div');
   row.style.display = 'flex';
   for (let i = 0; i < rowLength; i+=1) {
-    const square = makeSquare(gridWidth, 16);
+    const square = makeSquare(gridWidth, rowLength);
     row.append(square);
   }
   return row;
@@ -32,7 +32,7 @@ const makeGrid = (gridSize) => {
   }
 }
 
-makeGrid(16);
+makeGrid(64);
 
 // yay it works !!!
 //gridContainer.append(makeRow(16));
