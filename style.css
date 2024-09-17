@@ -8,8 +8,10 @@ body {
   width: 100dvw;
   height: 100dvh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
 .grid-container {
@@ -17,6 +19,12 @@ body {
   height: 960px;
   border: 1px solid red;
   gap: 1px;
+}
+
+button {
+  width: 250px;
+  height: 50px;
+  font-size: 25px;
 }
 
 

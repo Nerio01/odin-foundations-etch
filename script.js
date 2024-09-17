@@ -12,8 +12,6 @@ const makeSquare = (sideLength, gridSize) => {
 
 const gridWidth = getComputedStyle(gridContainer).width;
 
-//const square = makeSquare(gridWidth, 16);
-
 const makeRow = (rowLength) => {
   const row = document.createElement('div');
   row.style.display = 'flex';
@@ -25,15 +23,27 @@ const makeRow = (rowLength) => {
 }
 
 const makeGrid = (gridSize) => {
-  if (gridSize > 100) return Error;
+  if (gridSize > 100 || !Number.isInteger(gridSize)) return reportError('value is above 100 or not an integer');
   for (let i = 0; i < gridSize; i+=1) {
     const row = makeRow(gridSize);
     gridContainer.append(row);
   }
 }
 
-makeGrid(64);
+const button = document.querySelector('button');
+
+const promptUser = prompt('Enter number from 1 to 100 to generate grid.');
+
+button.addEventListener('click', () => {
+  const promptUser = prompt('Enter number from 1 to 100 to generate grid.');
+
+  if (gridContainer.children.length > 0) {
+    while (gridContainer.firstElementChild) {
+      gridContainer.removeChild(gridContainer.lastElementChild)
+    }
+  }
+   makeGrid(Number.parseInt(promptUser));
+});
 
 // yay it works !!!
-//gridContainer.append(makeRow(16));
 
