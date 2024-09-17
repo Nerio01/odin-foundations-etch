@@ -12,21 +12,28 @@ const makeSquare = (sideLength, gridSize) => {
 
 const gridWidth = getComputedStyle(gridContainer).width;
 
-const square = makeSquare(gridWidth, 16);
+//const square = makeSquare(gridWidth, 16);
 
-
-const squares = [];
-
-const row = document.createElement('div');
-row.style.display = 'flex';
-
-
-for (let i = 0; i < 16; i+=1) {
-  const square = makeSquare(gridWidth, 16);
-  row.append(square);
+const makeRow = (rowLength) => {
+  const row = document.createElement('div');
+  row.style.display = 'flex';
+  for (let i = 0; i < rowLength; i+=1) {
+    const square = makeSquare(gridWidth, 16);
+    row.append(square);
+  }
+  return row;
 }
 
+const makeGrid = (gridSize) => {
+  if (gridSize > 100) return Error;
+  for (let i = 0; i < gridSize; i+=1) {
+    const row = makeRow(gridSize);
+    gridContainer.append(row);
+  }
+}
 
+makeGrid(16);
 
+// yay it works !!!
+//gridContainer.append(makeRow(16));
 
-gridContainer.append(row);
