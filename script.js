@@ -47,18 +47,20 @@ button.addEventListener('click', () => {
 
 
 const reduceOpacity = (element) => {
-  const bkgrOpacity = element.style.opacity;
+  const bkgrOpacity = element.target.style.opacity;
   //console.log(bkgrOpacity);
-  element.style.opacity = Number.parseInt((bkgrOpacity)) - 0.1;
+  element.target.style.opacity = `${Number.parseInt((bkgrOpacity)) - 0.1}`;
   //console.log(element.style.opacity);  
 }
 
 
 // use e.target.matches('div .wololo')!!!!
-document.addEventListener("onmousemove", e => {
+document.addEventListener("click", e => {
   if (e.target.matches('.color-square')) {
     console.log('fired off!');
-    reduceOpacity(e);
+    //reduceOpacity(e);
+    e.target.style.backgroundColor = 'black';
+    e.stopPropagation()
     //e.target.style.opacity = `${Number.parseInt((e.target.style.opacity - 0.1))}`;
   }
 })
