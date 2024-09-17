@@ -5,8 +5,10 @@ const makeSquare = (sideLength, gridSize) => {
   const getGridSideToNum = Number.parseInt(sideLength.toString().slice(0, -2));
   square.style.height = `${getGridSideToNum / gridSize}px`;
   square.style.width = `${getGridSideToNum / gridSize}px`;
-  square.style.border = '1px solid white';
-  square.style.backgroundColor = 'black';
+  square.style.border = '1px solid black';
+  square.style.backgroundColor = 'rgb(255, 255, 255)';
+  square.style.opacity = '1.0';
+  square.classList.add('color-square');
   return square;
 };
 
@@ -32,8 +34,6 @@ const makeGrid = (gridSize) => {
 
 const button = document.querySelector('button');
 
-const promptUser = prompt('Enter number from 1 to 100 to generate grid.');
-
 button.addEventListener('click', () => {
   const promptUser = prompt('Enter number from 1 to 100 to generate grid.');
 
@@ -44,6 +44,24 @@ button.addEventListener('click', () => {
   }
    makeGrid(Number.parseInt(promptUser));
 });
+
+
+const reduceOpacity = (element) => {
+  const bkgrOpacity = element.style.opacity;
+  //console.log(bkgrOpacity);
+  element.style.opacity = Number.parseInt((bkgrOpacity)) - 0.1;
+  //console.log(element.style.opacity);  
+}
+
+
+// use e.target.matches('div .wololo')!!!!
+document.addEventListener("onmousemove", e => {
+  if (e.target.matches('.color-square')) {
+    console.log('fired off!');
+    reduceOpacity(e);
+    //e.target.style.opacity = `${Number.parseInt((e.target.style.opacity - 0.1))}`;
+  }
+})
 
 // yay it works !!!
 
