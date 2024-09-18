@@ -1,5 +1,7 @@
 const gridContainer = document.querySelector('.grid-container');
 
+const gridWidth = getComputedStyle(gridContainer).width;
+
 const makeSquare = (sideLength, gridSize) => {
   const square = document.createElement('div');
   const getGridSideToNum = Number.parseInt(sideLength.toString().slice(0, -2));
@@ -17,8 +19,6 @@ const makeSquare = (sideLength, gridSize) => {
   })
   return square;
 };
-
-const gridWidth = getComputedStyle(gridContainer).width;
 
 const makeRow = (rowLength) => {
   const row = document.createElement('div');
@@ -50,26 +50,4 @@ button.addEventListener('click', () => {
   }
    makeGrid(Number.parseInt(promptUser));
 });
-
-
-const reduceOpacity = (element) => {
-  const bkgrOpacity = element.target.style.opacity;
-  //console.log(bkgrOpacity);
-  element.target.style.opacity = `${Number.parseInt((bkgrOpacity)) - 0.1}`;
-  //console.log(element.style.opacity);  
-}
-
-
-// use e.target.matches('div .wololo')!!!!
-//square.addEventListener("onmouseover", e => {
-//  if (e.target.matches('.color-square')) {
-//    console.log('fired off!');
-//    //reduceOpacity(e);
-//    e.target.style.opacity = e.target.style.opacity - 0.1;
-//    e.stopPropagation()
-//    //e.target.style.opacity = `${Number.parseInt((e.target.style.opacity - 0.1))}`;
-//  }
-//})
-//
-// yay it works !!!
 
