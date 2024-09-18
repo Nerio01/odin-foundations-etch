@@ -6,9 +6,15 @@ const makeSquare = (sideLength, gridSize) => {
   square.style.height = `${getGridSideToNum / gridSize}px`;
   square.style.width = `${getGridSideToNum / gridSize}px`;
   square.style.border = '1px solid black';
-  square.style.backgroundColor = 'rgb(255, 255, 255)';
+  square.style.backgroundColor = 'rgb(0, 0, 0)';
   square.style.opacity = '1.0';
   square.classList.add('color-square');
+
+  square.addEventListener("mouseenter", (e) => {
+      console.log('fired off!');
+      e.target.style.opacity = e.target.style.opacity - 0.1;
+      e.stopPropagation()
+  })
   return square;
 };
 
@@ -55,15 +61,15 @@ const reduceOpacity = (element) => {
 
 
 // use e.target.matches('div .wololo')!!!!
-document.addEventListener("click", e => {
-  if (e.target.matches('.color-square')) {
-    console.log('fired off!');
-    //reduceOpacity(e);
-    e.target.style.backgroundColor = 'black';
-    e.stopPropagation()
-    //e.target.style.opacity = `${Number.parseInt((e.target.style.opacity - 0.1))}`;
-  }
-})
-
+//square.addEventListener("onmouseover", e => {
+//  if (e.target.matches('.color-square')) {
+//    console.log('fired off!');
+//    //reduceOpacity(e);
+//    e.target.style.opacity = e.target.style.opacity - 0.1;
+//    e.stopPropagation()
+//    //e.target.style.opacity = `${Number.parseInt((e.target.style.opacity - 0.1))}`;
+//  }
+//})
+//
 // yay it works !!!
 
