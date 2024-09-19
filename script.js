@@ -3,6 +3,7 @@ const gridContainer = document.querySelector('.grid-container');
 const gridWidth = getComputedStyle(gridContainer).width;
 
 let lmbHoldState = 'released';
+let gridGenerated = 'not-generated';
 
 gridContainer.addEventListener('mousedown', () => { 
   lmbHoldState = 'hold';
@@ -12,12 +13,17 @@ gridContainer.addEventListener('mouseup', () => {
   lmbHoldState = 'released';
 })
 
+gridContainer.addEventListener('mouseenter', () => {
+  if (gridGenerated === 'not-generated') gridContainer.style.cursor = 'auto';
+  if (gridGenerated === 'generated') gridContainer.style.cursor = 'none';
+})
+
 const makeSquare = (sideLength, gridSize, increment = 0.1) => {
   const square = document.createElement('div');
   const getGridSideToNum = Number.parseInt(sideLength.toString().slice(0, -2));
   square.style.height = `${getGridSideToNum / gridSize}px`;
   square.style.width = `${getGridSideToNum / gridSize}px`;
-  square.style.border = '1px solid black';
+  square.style.border = 'none';
   square.style.backgroundColor = 'rgb(0, 0, 0)';
   square.style.opacity = '1.0';
   square.style.userSelect = 'none'; 
@@ -32,6 +38,10 @@ const makeSquare = (sideLength, gridSize, increment = 0.1) => {
         e.target.style.opacity = e.target.style.opacity - increment;
         e.stopPropagation()
   });
+
+  square.addEventListener('mouseenter', () => square.style.border = '2px dotted lightgreen');
+
+  square.addEventListener('mouseleave', () => square.style.border = 'none');
 
   return square;
 };
@@ -51,6 +61,7 @@ const makeGrid = (gridSize) => {
   for (let i = 0; i < gridSize; i+=1) {
     const row = makeRow(gridSize);
     gridContainer.append(row);
+    gridGenerated = 'generated';
   }
 }
 

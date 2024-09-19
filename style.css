@@ -19,7 +19,6 @@ body {
   height: 800px;
   border: 1px solid red;
   gap: 1px;
-  -webkit-user-drag: none; 
 }
 
 button {
