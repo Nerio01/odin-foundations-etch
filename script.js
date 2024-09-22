@@ -11,7 +11,7 @@ let lastGeneratedGridSize = '';
 gridContainer.addEventListener('mousedown', e => {
   if (e.button === 0) lmbHoldState = 'hold';
   if (e.button === 2) rmbHoldState = 'hold';
-})
+});
 
 gridContainer.addEventListener('mouseup', e => {
   if (e.button === 0) lmbHoldState = 'released';
@@ -23,12 +23,15 @@ gridContainer.addEventListener('mouseenter', () => {
   if (gridGenerated === 'generated') gridContainer.style.cursor = 'none';
 })
 
-const modifyBkgrColor = (bgValStr, plusOrMinus) => {
+const getRndInteger = (min, max) => Math.floor(Math.random() * (max - min) ) + min;
+
+const modifyBkgrColor = (bgValStr, modifier) => {
   const sliced = bgValStr.slice(4, -1).split(', ');
   const result = [];
-  if (plusOrMinus === 'plus') sliced.forEach((element) => result.push(Number.parseFloat(element) + 25.5));
-  if (plusOrMinus === 'minus') sliced.forEach((element) => result.push(Number.parseFloat(element) - 25.5));
-
+  if (modifier === 'plus') sliced.forEach((element) => result.push(Number.parseFloat(element) + 25.5));
+  if (modifier === 'minus') sliced.forEach((element) => result.push(Number.parseFloat(element) - 25.5));
+  if (modifier === 'rndColor') sliced.forEach(() => result.push(getRndInteger(0, 255))); 
+    
   const [red, green , blue] = result;
   return `rgb(${red}, ${green}, ${blue})`;
 }
@@ -45,16 +48,19 @@ const makeSquare = (sideLength, gridSize,) => {
   square.setAttribute('oncontextmenu', 'return false');
    
   square.addEventListener("mouseover", e => {
-    if (lmbHoldState === 'hold') {
+    if (lmbHoldState === 'hold' && rmbHoldState !== 'hold') {
       e.target.style.backgroundColor = modifyBkgrColor(e.target.style.backgroundColor, 'plus');
     }
-    if (rmbHoldState === 'hold') {
+    if (rmbHoldState === 'hold' && lmbHoldState !== 'hold') {
       e.target.style.backgroundColor = modifyBkgrColor(e.target.style.backgroundColor, 'minus');
-    }  
+    }
+    if (rmbHoldState === 'hold' && lmbHoldState === 'hold') {
+      e.target.style.backgroundColor = modifyBkgrColor(e.target.style.backgroundColor, 'rndColor');
+    }
       e.stopPropagation()
     
   });
-  
+
   square.addEventListener('click', e => {
     if (e.button === 0) e.target.style.backgroundColor = modifyBkgrColor(e.target.style.backgroundColor, 'plus');
     e.stopPropagation();
