@@ -4,15 +4,18 @@ gridContainer.setAttribute('oncontextmenu', 'return false');
 const gridWidth = getComputedStyle(gridContainer).width;
 
 let lmbHoldState = 'released';
+let rmbHoldState = 'released';
 let gridGenerated = 'not-generated';
 let lastGeneratedGridSize = '';
 
 gridContainer.addEventListener('mousedown', e => {
   if (e.button === 0) lmbHoldState = 'hold';
+  if (e.button === 2) rmbHoldState = 'hold';
 })
 
 gridContainer.addEventListener('mouseup', e => {
   if (e.button === 0) lmbHoldState = 'released';
+  if (e.button === 2) rmbHoldState = 'released';
 })
 
 gridContainer.addEventListener('mouseenter', () => {
@@ -20,10 +23,12 @@ gridContainer.addEventListener('mouseenter', () => {
   if (gridGenerated === 'generated') gridContainer.style.cursor = 'none';
 })
 
-const modifyBkgrColor = (bgValStr) => {
+const modifyBkgrColor = (bgValStr, plusOrMinus) => {
   const sliced = bgValStr.slice(4, -1).split(', ');
   const result = [];
-  sliced.forEach((element) => result.push(Number.parseFloat(element) + 25.5));
+  if (plusOrMinus === 'plus') sliced.forEach((element) => result.push(Number.parseFloat(element) + 25.5));
+  if (plusOrMinus === 'minus') sliced.forEach((element) => result.push(Number.parseFloat(element) - 25.5));
+
   const [red, green , blue] = result;
   return `rgb(${red}, ${green}, ${blue})`;
 }
@@ -37,18 +42,29 @@ const makeSquare = (sideLength, gridSize,) => {
   square.style.backgroundColor = 'rgb(0, 0, 0)';
   square.style.userSelect = 'none'; 
   square.classList.add('color-square');
-  
+  square.setAttribute('oncontextmenu', 'return false');
+   
   square.addEventListener("mouseover", e => {
     if (lmbHoldState === 'hold') {
-      e.target.style.backgroundColor = modifyBkgrColor(e.target.style.backgroundColor);
-      e.stopPropagation()
+      e.target.style.backgroundColor = modifyBkgrColor(e.target.style.backgroundColor, 'plus');
     }
+    if (rmbHoldState === 'hold') {
+      e.target.style.backgroundColor = modifyBkgrColor(e.target.style.backgroundColor, 'minus');
+    }  
+      e.stopPropagation()
+    
   });
   
   square.addEventListener('click', e => {
-    e.target.style.backgroundColor = modifyBkgrColor(e.target.style.backgroundColor);
+    if (e.button === 0) e.target.style.backgroundColor = modifyBkgrColor(e.target.style.backgroundColor, 'plus');
     e.stopPropagation();
   })
+
+  square.addEventListener('contextmenu', e => {
+    e.target.style.backgroundColor = modifyBkgrColor(e.target.style.backgroundColor, 'minus');
+    e.stopPropagation();
+  });
+
   square.addEventListener('mouseenter', () => square.style.border = '2px solid red');
 
   square.addEventListener('mouseleave', () => square.style.border = 'none');
