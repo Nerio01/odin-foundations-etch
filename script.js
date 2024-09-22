@@ -4,6 +4,7 @@ const gridWidth = getComputedStyle(gridContainer).width;
 
 let lmbHoldState = 'released';
 let gridGenerated = 'not-generated';
+let lastGeneratedGridSize = '';
 
 gridContainer.addEventListener('mousedown', () => { 
   lmbHoldState = 'hold';
@@ -26,8 +27,6 @@ const changeToBrighter = (paramString) => {
   return `rgb(${red}, ${green}, ${blue})`;
 }
 
-//console.log(changeToDarker('rgb(255, 255, 255)'));
-
 const makeSquare = (sideLength, gridSize, increment = 0.1) => {
   const square = document.createElement('div');
   const getGridSideToNum = Number.parseInt(sideLength.toString().slice(0, -2));
@@ -35,20 +34,16 @@ const makeSquare = (sideLength, gridSize, increment = 0.1) => {
   square.style.width = `${getGridSideToNum / gridSize}px`;
   square.style.border = 'none';
   square.style.backgroundColor = 'rgb(0, 0, 0)';
-  square.style.opacity = '1.0';
   square.style.userSelect = 'none'; 
   square.classList.add('color-square');
+  
   square.addEventListener("mouseover", e => {
     if (lmbHoldState === 'hold') {
       e.target.style.backgroundColor = changeToBrighter(e.target.style.backgroundColor);
       e.stopPropagation()
     }
   });
-  //square.addEventListener("click", e => {
-  //      e.target.style.opacity = e.target.style.opacity - increment;
-  //      console.log(e.target.style.values);
-  //      e.stopPropagation()
-  //});
+  
   square.addEventListener('click', e => {
     e.target.style.backgroundColor = changeToBrighter(e.target.style.backgroundColor);
     e.stopPropagation();
@@ -79,10 +74,11 @@ const makeGrid = (gridSize) => {
   }
 }
 
-const button = document.querySelector('button');
+const gridGeneratorButton = document.querySelector('.grid-generator');
 
-button.addEventListener('click', () => {
+gridGeneratorButton.addEventListener('click', () => {
   const promptUser = prompt('Enter number from 1 to 100 to generate grid.');
+  lastGeneratedGridSize = promptUser;
 
   if (gridContainer.children.length > 0) {
     while (gridContainer.firstElementChild) {
@@ -91,4 +87,19 @@ button.addEventListener('click', () => {
   }
    makeGrid(Number.parseInt(promptUser));
 });
+
+const gridResetButton = document.querySelector('.grid-reset');
+gridResetButton.addEventListener('click', () => {
+  if (lastGeneratedGridSize.length === 0) {
+    alert('Nothing to reset. Please generate grid first.');
+    return;
+  }
+   if (gridContainer.children.length > 0) {
+    while (gridContainer.firstElementChild) {
+      gridContainer.removeChild(gridContainer.lastElementChild)
+    }
+  }
+   makeGrid(Number.parseInt(lastGeneratedGridSize));
+})
+
 
