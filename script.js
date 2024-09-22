@@ -18,6 +18,16 @@ gridContainer.addEventListener('mouseenter', () => {
   if (gridGenerated === 'generated') gridContainer.style.cursor = 'none';
 })
 
+const changeToBrighter = (paramString) => {
+  const sliced = paramString.slice(4, -1).split(', ');
+  const result = [];
+  sliced.forEach((element) => result.push(Number.parseFloat(element) + 25.5));
+  const [red, green , blue] = result;
+  return `rgb(${red}, ${green}, ${blue})`;
+}
+
+//console.log(changeToDarker('rgb(255, 255, 255)'));
+
 const makeSquare = (sideLength, gridSize, increment = 0.1) => {
   const square = document.createElement('div');
   const getGridSideToNum = Number.parseInt(sideLength.toString().slice(0, -2));
@@ -30,16 +40,20 @@ const makeSquare = (sideLength, gridSize, increment = 0.1) => {
   square.classList.add('color-square');
   square.addEventListener("mouseover", e => {
     if (lmbHoldState === 'hold') {
-        e.target.style.opacity = e.target.style.opacity - increment;
-        e.stopPropagation()
+      e.target.style.backgroundColor = changeToBrighter(e.target.style.backgroundColor);
+      e.stopPropagation()
     }
   });
-  square.addEventListener("click", e => {
-        e.target.style.opacity = e.target.style.opacity - increment;
-        e.stopPropagation()
-  });
-
-  square.addEventListener('mouseenter', () => square.style.border = '2px dotted lightgreen');
+  //square.addEventListener("click", e => {
+  //      e.target.style.opacity = e.target.style.opacity - increment;
+  //      console.log(e.target.style.values);
+  //      e.stopPropagation()
+  //});
+  square.addEventListener('click', e => {
+    e.target.style.backgroundColor = changeToBrighter(e.target.style.backgroundColor);
+    e.stopPropagation();
+  })
+  square.addEventListener('mouseenter', () => square.style.border = '2px solid red');
 
   square.addEventListener('mouseleave', () => square.style.border = 'none');
 
