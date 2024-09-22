@@ -1,4 +1,5 @@
 const gridContainer = document.querySelector('.grid-container');
+gridContainer.setAttribute('oncontextmenu', 'return false');
 
 const gridWidth = getComputedStyle(gridContainer).width;
 
@@ -6,12 +7,12 @@ let lmbHoldState = 'released';
 let gridGenerated = 'not-generated';
 let lastGeneratedGridSize = '';
 
-gridContainer.addEventListener('mousedown', () => { 
-  lmbHoldState = 'hold';
+gridContainer.addEventListener('mousedown', e => {
+  if (e.button === 0) lmbHoldState = 'hold';
 })
 
-gridContainer.addEventListener('mouseup', () => {
-  lmbHoldState = 'released';
+gridContainer.addEventListener('mouseup', e => {
+  if (e.button === 0) lmbHoldState = 'released';
 })
 
 gridContainer.addEventListener('mouseenter', () => {
@@ -19,15 +20,15 @@ gridContainer.addEventListener('mouseenter', () => {
   if (gridGenerated === 'generated') gridContainer.style.cursor = 'none';
 })
 
-const changeToBrighter = (paramString) => {
-  const sliced = paramString.slice(4, -1).split(', ');
+const modifyBkgrColor = (bgValStr) => {
+  const sliced = bgValStr.slice(4, -1).split(', ');
   const result = [];
   sliced.forEach((element) => result.push(Number.parseFloat(element) + 25.5));
   const [red, green , blue] = result;
   return `rgb(${red}, ${green}, ${blue})`;
 }
 
-const makeSquare = (sideLength, gridSize, increment = 0.1) => {
+const makeSquare = (sideLength, gridSize,) => {
   const square = document.createElement('div');
   const getGridSideToNum = Number.parseInt(sideLength.toString().slice(0, -2));
   square.style.height = `${getGridSideToNum / gridSize}px`;
@@ -39,13 +40,13 @@ const makeSquare = (sideLength, gridSize, increment = 0.1) => {
   
   square.addEventListener("mouseover", e => {
     if (lmbHoldState === 'hold') {
-      e.target.style.backgroundColor = changeToBrighter(e.target.style.backgroundColor);
+      e.target.style.backgroundColor = modifyBkgrColor(e.target.style.backgroundColor);
       e.stopPropagation()
     }
   });
   
   square.addEventListener('click', e => {
-    e.target.style.backgroundColor = changeToBrighter(e.target.style.backgroundColor);
+    e.target.style.backgroundColor = modifyBkgrColor(e.target.style.backgroundColor);
     e.stopPropagation();
   })
   square.addEventListener('mouseenter', () => square.style.border = '2px solid red');
