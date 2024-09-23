@@ -125,4 +125,25 @@ gridResetButton.addEventListener('click', () => {
    makeGrid(Number.parseInt(lastGeneratedGridSize));
 })
 
+const buttons = Array.from(document.querySelectorAll('button'));
+
+buttons.forEach((button) => {
+  button.addEventListener('mouseover', e => {
+    e.target.style.border = '2px solid white';
+    e.target.style.color = 'white';
+  });
+  button.addEventListener('mouseout', e => {
+    e.target.style.border = '2px solid lightgreen';
+    e.target.style.color = 'lightgreen';
+  });
+  button.addEventListener('mousedown', e => {
+    e.target.style.border = '2px solid lightgreen';
+    e.target.style.color = 'lightgreen';
+  });
+  button.addEventListener('mouseup', e => {
+    e.target.style.border = '2px solid white';
+    e.target.style.color = 'white';
+  });
+});
+
 
