@@ -11,20 +11,25 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
+  background-color: black;
 }
 
 .grid-container {
   width: 800px;
   height: 800px;
-  border: 1px solid red;
   gap: 1px;
+  box-shadow: 0px 0px 0px 4px lightgreen; /* replaced border due to interference with box-sizing (it was "eating the bottom border after generation of grid")*/
 }
 
 button {
   width: 250px;
   height: 50px;
   font-size: 25px;
+  color: lightgreen;
+  background-color: black;
+  border: 2px solid lightgreen;
+  font-weight: 800px;
 }
 
 
