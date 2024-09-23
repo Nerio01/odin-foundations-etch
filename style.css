@@ -12,13 +12,13 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   background-color: black;
 }
 
 header {
   color: lightgreen;
-  font-size: 80px;
+  font-size: 70px;
 }
 
 .grid-container {
@@ -30,9 +30,9 @@ header {
 }
 
 button {
-  width: 250px;
-  height: 50px;
-  font-size: 45px;
+  width: 220px;
+  height: 40;
+  font-size: 40px;
   color: lightgreen;
   background-color: black;
   border: 2px solid lightgreen;
@@ -45,6 +45,6 @@ button {
 
 footer {
   color: whitesmoke;
-  font-size: 30px;
+  font-size: 20px;
 }
 
