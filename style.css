@@ -22,8 +22,8 @@ header {
 }
 
 .grid-container {
-  width: 700px;
-  height: 700px;
+  width: 600px;
+  height: 600px;
   gap: 1px;
   box-shadow: 0px 0px 0px 4px lightgreen; /* replaced border due to interference with box-sizing (it was "eating the bottom border after generation of grid")*/
   flex-shrink: 0;
