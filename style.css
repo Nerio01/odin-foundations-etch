@@ -12,7 +12,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   background-color: black;
 }
 
@@ -22,8 +22,8 @@ header {
 }
 
 .grid-container {
-  width: 500px;
-  height: 500px;
+  width: 650px;
+  height: 650px;
   gap: 1px;
   box-shadow: 0px 0px 0px 4px lightgreen; /* replaced border due to interference with box-sizing (it was "eating the bottom border after generation of grid")*/
   flex-shrink: 0;
@@ -45,6 +45,6 @@ button {
 
 footer {
   color: whitesmoke;
-  font-size: 20px;
+  font-size: 30px;
 }
 
